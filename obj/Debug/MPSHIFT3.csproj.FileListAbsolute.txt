@@ -1,0 +1,25 @@
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\bin\Debug\MPSHIFT3.exe.config
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\bin\Debug\MPSHIFT3.exe
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\bin\Debug\MPSHIFT3.pdb
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.csprojAssemblyReference.cache
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.Form1.resources
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.Properties.Resources.resources
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.csproj.GenerateResource.cache
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.csproj.CoreCompileInputs.cache
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.exe
+C:\Users\Manu\source\repos\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.pdb
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\bin\Debug\MPSHIFT3.exe.config
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\bin\Debug\MPSHIFT3.exe
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\bin\Debug\MPSHIFT3.pdb
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.csprojAssemblyReference.cache
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.Form1.resources
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.Properties.Resources.resources
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.csproj.GenerateResource.cache
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.csproj.CoreCompileInputs.cache
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.exe
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.pdb
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\bin\Debug\Interop.WMPLib.dll
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\bin\Debug\AxInterop.WMPLib.dll
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\Interop.WMPLib.dll
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\AxInterop.WMPLib.dll
+D:\Atestat\C# AudioPlayer\MPSHIFT3\MPSHIFT3\obj\Debug\MPSHIFT3.csproj.ResolveComReference.cache
