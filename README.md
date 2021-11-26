@@ -1,2 +1,2 @@
 # MPShift3
- Simple Music Player made using 
+ Simple Music Player.
