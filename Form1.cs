@@ -13,9 +13,11 @@ namespace MPSHIFT3
 {
     public partial class Form1 : Form
     {
+        public long timePlayed = 0;
         public Form1()
         {
             InitializeComponent();
+            //buttonFirst = new ThumbnailToolBarButton(Properties.Resources.first, "First Image");
             track_volume.Value = 69;
         }
 
@@ -25,8 +27,11 @@ namespace MPSHIFT3
 
         private void track_list_SelectedIndexChanged(object sender, EventArgs e)
         {
-            player.URL = paths[track_list.SelectedIndex];
-            player.Ctlcontrols.play();
+            if (track_list.SelectedIndex != -1)
+            {
+                player.URL = paths[track_list.SelectedIndex];
+                player.Ctlcontrols.play();
+            }
             try
             {
                 /*
@@ -82,9 +87,12 @@ namespace MPSHIFT3
         {
             if(player.playState == WMPLib.WMPPlayState.wmppsPlaying)
             {
+                timePlayed++;
+                lbl_time_played.Text = "Timp ascultat: " + ((int)(timePlayed/10)).ToString();
                 p_bar.Maximum = (int)player.Ctlcontrols.currentItem.duration;
                 p_bar.Value = (int)player.Ctlcontrols.currentPosition;
                 //track_volume.Value = (int)player.Ctlcontrols.currentPosition;
+               
             }
             try
             {
@@ -116,7 +124,7 @@ namespace MPSHIFT3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
         //button de vazut sau nu optiuni avansate
         private void button1_Click(object sender, EventArgs e)
@@ -134,20 +142,49 @@ namespace MPSHIFT3
         
         }
 
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+
+        private void p_bar_MouseClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                int procentDeDatSkip = (e.X * 100) / 268;
+                int inceputMelodie = 0;
+                int lungimeMelodie = (int)(player.Ctlcontrols.currentItem.duration);
+                player.Ctlcontrols.currentPosition = procentDeDatSkip * lungimeMelodie / 100;
+            } catch { }
+        }
+
+        private void timer_melodie_terminata_Tick(object sender, EventArgs e)
+        {
+            if (player.playState == WMPLib.WMPPlayState.wmppsStopped)
+            {
+                btn_next_Click(sender, e);
+            }
+        }
+
         private void btn_open_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
             if(ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                
                 files = ofd.FileNames;
                 paths = ofd.FileNames;
+                track_list.DataSource = null;
+                track_list.Items.Clear();
                 for (int i = 0; i < files.Length; i++)
                 {
                     string file = Path.GetFileName(files[i]);
+                    string ext = Path.GetExtension(file);
+                    if(ext == ".mp3") //adaugam doar fisierele mp3
                     track_list.Items.Add(file);
                 }
-                btn_open.Enabled = false;
+                //btn_open.Enabled = false;
                 System.Windows.Forms.MessageBox.Show("Melodiile au fost adaugate cu succes!");
             }
         }

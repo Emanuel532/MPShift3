@@ -39,7 +39,6 @@
             this.p_bar = new System.Windows.Forms.ProgressBar();
             this.track_list = new System.Windows.Forms.ListBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.track_volume = new System.Windows.Forms.TrackBar();
             this.lbl_volume = new System.Windows.Forms.Label();
             this.lbl_track_start = new System.Windows.Forms.Label();
@@ -50,14 +49,16 @@
             this.lbl_time_played = new System.Windows.Forms.Label();
             this.lbl_shuffle = new System.Windows.Forms.Label();
             this.lbl_volume_percentage = new System.Windows.Forms.Label();
+            this.player = new AxWMPLib.AxWindowsMediaPlayer();
+            this.timer_melodie_terminata = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_volume)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_preview
             // 
-            this.btn_preview.Location = new System.Drawing.Point(3, 348);
+            this.btn_preview.Location = new System.Drawing.Point(12, 345);
             this.btn_preview.Name = "btn_preview";
             this.btn_preview.Size = new System.Drawing.Size(111, 31);
             this.btn_preview.TabIndex = 0;
@@ -67,7 +68,7 @@
             // 
             // btn_next
             // 
-            this.btn_next.Location = new System.Drawing.Point(234, 348);
+            this.btn_next.Location = new System.Drawing.Point(243, 345);
             this.btn_next.Name = "btn_next";
             this.btn_next.Size = new System.Drawing.Size(111, 31);
             this.btn_next.TabIndex = 1;
@@ -77,7 +78,7 @@
             // 
             // btn_play
             // 
-            this.btn_play.Location = new System.Drawing.Point(117, 311);
+            this.btn_play.Location = new System.Drawing.Point(126, 308);
             this.btn_play.Name = "btn_play";
             this.btn_play.Size = new System.Drawing.Size(111, 31);
             this.btn_play.TabIndex = 2;
@@ -87,7 +88,7 @@
             // 
             // btn_pause
             // 
-            this.btn_pause.Location = new System.Drawing.Point(117, 388);
+            this.btn_pause.Location = new System.Drawing.Point(126, 385);
             this.btn_pause.Name = "btn_pause";
             this.btn_pause.Size = new System.Drawing.Size(111, 31);
             this.btn_pause.TabIndex = 3;
@@ -97,7 +98,7 @@
             // 
             // btn_stop
             // 
-            this.btn_stop.Location = new System.Drawing.Point(117, 348);
+            this.btn_stop.Location = new System.Drawing.Point(126, 345);
             this.btn_stop.Name = "btn_stop";
             this.btn_stop.Size = new System.Drawing.Size(111, 31);
             this.btn_stop.TabIndex = 4;
@@ -119,8 +120,9 @@
             // 
             this.p_bar.Location = new System.Drawing.Point(11, 425);
             this.p_bar.Name = "p_bar";
-            this.p_bar.Size = new System.Drawing.Size(359, 10);
+            this.p_bar.Size = new System.Drawing.Size(359, 23);
             this.p_bar.TabIndex = 7;
+            this.p_bar.MouseClick += new System.Windows.Forms.MouseEventHandler(this.p_bar_MouseClick);
             // 
             // track_list
             // 
@@ -141,16 +143,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
-            // 
-            // player
-            // 
-            this.player.Dock = System.Windows.Forms.DockStyle.Top;
-            this.player.Enabled = true;
-            this.player.Location = new System.Drawing.Point(0, 0);
-            this.player.Name = "player";
-            this.player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("player.OcxState")));
-            this.player.Size = new System.Drawing.Size(810, 10);
-            this.player.TabIndex = 10;
             // 
             // track_volume
             // 
@@ -243,6 +235,22 @@
             this.lbl_volume_percentage.TabIndex = 19;
             this.lbl_volume_percentage.Text = "70%";
             // 
+            // player
+            // 
+            this.player.Dock = System.Windows.Forms.DockStyle.Top;
+            this.player.Enabled = true;
+            this.player.Location = new System.Drawing.Point(0, 0);
+            this.player.Name = "player";
+            this.player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("player.OcxState")));
+            this.player.Size = new System.Drawing.Size(810, 10);
+            this.player.TabIndex = 10;
+            // 
+            // timer_melodie_terminata
+            // 
+            this.timer_melodie_terminata.Enabled = true;
+            this.timer_melodie_terminata.Interval = 1000;
+            this.timer_melodie_terminata.Tick += new System.EventHandler(this.timer_melodie_terminata_Tick);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -269,14 +277,15 @@
             this.Controls.Add(this.btn_next);
             this.Controls.Add(this.btn_preview);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "MPSHIFT3";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_volume)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -304,6 +313,7 @@
         private System.Windows.Forms.Label lbl_time_played;
         private System.Windows.Forms.Label lbl_shuffle;
         private System.Windows.Forms.Label lbl_volume_percentage;
+        private System.Windows.Forms.Timer timer_melodie_terminata;
     }
 }
 
