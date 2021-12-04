@@ -38,7 +38,6 @@
             this.btn_open = new System.Windows.Forms.Button();
             this.p_bar = new System.Windows.Forms.ProgressBar();
             this.track_list = new System.Windows.Forms.ListBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.track_volume = new System.Windows.Forms.TrackBar();
             this.lbl_volume = new System.Windows.Forms.Label();
             this.lbl_track_start = new System.Windows.Forms.Label();
@@ -51,9 +50,12 @@
             this.lbl_volume_percentage = new System.Windows.Forms.Label();
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.timer_melodie_terminata = new System.Windows.Forms.Timer(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.txtbox_search = new System.Windows.Forms.TextBox();
+            this.search_results = new System.Windows.Forms.ListBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.track_volume)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_preview
@@ -134,16 +136,6 @@
             this.track_list.TabIndex = 8;
             this.track_list.SelectedIndexChanged += new System.EventHandler(this.track_list_SelectedIndexChanged);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::MPSHIFT3.Properties.Resources.bgImg;
-            this.pictureBox1.Location = new System.Drawing.Point(11, 67);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(287, 180);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
-            // 
             // track_volume
             // 
             this.track_volume.Location = new System.Drawing.Point(314, 67);
@@ -209,7 +201,7 @@
             // lbl_time_played
             // 
             this.lbl_time_played.AutoSize = true;
-            this.lbl_time_played.Location = new System.Drawing.Point(396, 65);
+            this.lbl_time_played.Location = new System.Drawing.Point(396, 28);
             this.lbl_time_played.Name = "lbl_time_played";
             this.lbl_time_played.Size = new System.Drawing.Size(100, 17);
             this.lbl_time_played.TabIndex = 17;
@@ -219,7 +211,7 @@
             // lbl_shuffle
             // 
             this.lbl_shuffle.AutoSize = true;
-            this.lbl_shuffle.Location = new System.Drawing.Point(396, 96);
+            this.lbl_shuffle.Location = new System.Drawing.Point(396, 57);
             this.lbl_shuffle.Name = "lbl_shuffle";
             this.lbl_shuffle.Size = new System.Drawing.Size(120, 17);
             this.lbl_shuffle.TabIndex = 18;
@@ -244,6 +236,7 @@
             this.player.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("player.OcxState")));
             this.player.Size = new System.Drawing.Size(810, 10);
             this.player.TabIndex = 10;
+            this.player.Enter += new System.EventHandler(this.player_Enter);
             // 
             // timer_melodie_terminata
             // 
@@ -251,12 +244,43 @@
             this.timer_melodie_terminata.Interval = 1000;
             this.timer_melodie_terminata.Tick += new System.EventHandler(this.timer_melodie_terminata_Tick);
             // 
+            // txtbox_search
+            // 
+            this.txtbox_search.Location = new System.Drawing.Point(399, 87);
+            this.txtbox_search.Name = "txtbox_search";
+            this.txtbox_search.Size = new System.Drawing.Size(399, 22);
+            this.txtbox_search.TabIndex = 20;
+            this.txtbox_search.TextChanged += new System.EventHandler(this.txtbox_search_TextChanged);
+            // 
+            // search_results
+            // 
+            this.search_results.FormattingEnabled = true;
+            this.search_results.ItemHeight = 16;
+            this.search_results.Location = new System.Drawing.Point(399, 125);
+            this.search_results.Name = "search_results";
+            this.search_results.Size = new System.Drawing.Size(403, 468);
+            this.search_results.TabIndex = 21;
+            this.search_results.Visible = false;
+            this.search_results.SelectedIndexChanged += new System.EventHandler(this.search_results_SelectedIndexChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::MPSHIFT3.Properties.Resources.bgImg;
+            this.pictureBox1.Location = new System.Drawing.Point(11, 67);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(287, 180);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(810, 596);
+            this.Controls.Add(this.search_results);
+            this.Controls.Add(this.txtbox_search);
             this.Controls.Add(this.lbl_volume_percentage);
             this.Controls.Add(this.lbl_shuffle);
             this.Controls.Add(this.lbl_time_played);
@@ -282,10 +306,11 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MPSHIFT3";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_volume)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.player)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -301,8 +326,6 @@
         private System.Windows.Forms.Button btn_open;
         private System.Windows.Forms.ProgressBar p_bar;
         private System.Windows.Forms.ListBox track_list;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private AxWMPLib.AxWindowsMediaPlayer player;
         private System.Windows.Forms.TrackBar track_volume;
         private System.Windows.Forms.Label lbl_volume;
         private System.Windows.Forms.Label lbl_track_start;
@@ -314,6 +337,10 @@
         private System.Windows.Forms.Label lbl_shuffle;
         private System.Windows.Forms.Label lbl_volume_percentage;
         private System.Windows.Forms.Timer timer_melodie_terminata;
+        private System.Windows.Forms.TextBox txtbox_search;
+        private System.Windows.Forms.ListBox search_results;
+        public AxWMPLib.AxWindowsMediaPlayer player;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

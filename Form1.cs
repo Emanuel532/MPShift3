@@ -18,12 +18,14 @@ namespace MPSHIFT3
         {
             InitializeComponent();
             //buttonFirst = new ThumbnailToolBarButton(Properties.Resources.first, "First Image");
-            track_volume.Value = 69;
+            track_volume.Value = 70;
         }
-
+        bool butonDeOpritApasat = false;
         bool shuffle_play = false;
         bool toggle_view = false;
-        string[] paths, files;
+        string[] paths = new string[100001];
+        string[] files = new string[100001];
+        string FolderPath;
 
         private void track_list_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -31,6 +33,7 @@ namespace MPSHIFT3
             {
                 player.URL = paths[track_list.SelectedIndex];
                 player.Ctlcontrols.play();
+                //player.currentMedia.
             }
             try
             {
@@ -45,6 +48,7 @@ namespace MPSHIFT3
         private void btn_stop_Click(object sender, EventArgs e)
         {
             player.Ctlcontrols.stop();
+            butonDeOpritApasat = true;
         }
 
         private void btn_pause_Click(object sender, EventArgs e)
@@ -124,7 +128,30 @@ namespace MPSHIFT3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            try
+            {
+                //Incarcam fisierele adaugate in playlist anterior
+                int counter = 0;
+                StreamReader sr = new StreamReader("db.csv");
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    files[counter] = line;
+                    paths[counter] = line;
+                    counter++;
+                }
+
+                for (int i = 0; i < files.Length; i++)
+                {
+                    string file = Path.GetFileName(files[i]);
+                    string ext = Path.GetExtension(file);
+                    FolderPath = Path.GetDirectoryName(files[0]);
+                    if (ext == ".mp3") //adaugam doar fisierele mp3
+                        track_list.Items.Add(file);
+                }
+                sr.Close();
+            } catch { }
+                
         }
         //button de vazut sau nu optiuni avansate
         private void button1_Click(object sender, EventArgs e)
@@ -152,7 +179,6 @@ namespace MPSHIFT3
             try
             {
                 int procentDeDatSkip = (e.X * 100) / 268;
-                int inceputMelodie = 0;
                 int lungimeMelodie = (int)(player.Ctlcontrols.currentItem.duration);
                 player.Ctlcontrols.currentPosition = procentDeDatSkip * lungimeMelodie / 100;
             } catch { }
@@ -160,9 +186,24 @@ namespace MPSHIFT3
 
         private void timer_melodie_terminata_Tick(object sender, EventArgs e)
         {
-            if (player.playState == WMPLib.WMPPlayState.wmppsStopped)
+            if (player.playState == WMPLib.WMPPlayState.wmppsStopped && butonDeOpritApasat == false)
             {
                 btn_next_Click(sender, e);
+            }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {//inainte de inchidere salvam fisierele deja adaugate in playlist
+            try
+            {
+                StreamWriter sw = new StreamWriter("db.csv");
+                for (int i = 0; i < track_list.Items.Count; i++) {
+                    sw.WriteLine(paths[i]);
+                }
+                sw.Close();
+            } catch
+            {
+
             }
         }
 
@@ -175,6 +216,8 @@ namespace MPSHIFT3
                 
                 files = ofd.FileNames;
                 paths = ofd.FileNames;
+
+                FolderPath = Path.GetDirectoryName(files[0]);
                 track_list.DataSource = null;
                 track_list.Items.Clear();
                 for (int i = 0; i < files.Length; i++)
@@ -189,7 +232,45 @@ namespace MPSHIFT3
             }
         }
 
+        private void txtbox_search_TextChanged(object sender, EventArgs e)
+        {
+            if (txtbox_search.Text != "")
+            {
+                search_results.Visible = true;
+                search_results.DataSource = null;
+                search_results.Items.Clear();
+                for (int i =0;i < files.Length; i++)
+                {
+                    if (files[i] == null)
+                        break;
+                    //MessageBox.Show();
+                    if(files[i].ToUpper().Contains(txtbox_search.Text.ToUpper().Trim()))
+                    {
+                        string file = Path.GetFileName(files[i]);
+                        string ext = Path.GetExtension(file);
+                        if (ext == ".mp3") //adaugam doar fisierele mp3
+                            search_results.Items.Add(file);
+                    }
+                }
+            }
+            else
+            {
+                search_results.Visible = false;
+            }
+        }
 
+        private void search_results_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+
+            player.URL = FolderPath+ "\\" + search_results.SelectedItem.ToString();
+            player.Ctlcontrols.play();
+        }
+
+        private void player_Enter(object sender, EventArgs e)
+        {
+
+        }
         //NEUTILIZABIL MOMENTAN
 
 
